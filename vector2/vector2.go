@@ -20,7 +20,7 @@ func (p *Point) Reset() {
 	p.Y = 0
 }
 
-// Slope
+// Slope returns the inclination of a line (formed by this point and the given point) to the horizontal axis
 func (p Point) Slope(other Point) float64 {
 	return (p.Y - other.Y) / (p.X - other.X)
 }
