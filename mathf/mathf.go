@@ -12,3 +12,19 @@ func Clamp(v, minimum, maximum float64) float64 {
 
 	return v
 }
+
+// Min returns the smallest number
+func Min(a, b float64) float64 {
+	if a <= b {
+		return a
+	}
+	return b
+}
+
+// Max returns the largest number
+func Max(a, b float64) float64 {
+	if a >= b {
+		return a
+	}
+	return b
+}
