@@ -147,11 +147,8 @@ func isSimplePolygon(vertices []vector.Vector2) bool {
 	segments[lastIndex] = sweepline.NewSegment(vertices[lastIndex], vertices[0])
 
 	intersections := sweepline.FindIntersections(segments)
-	if len(intersections) > 0 {
-		return false
-	}
 
-	return true
+	return len(intersections) <= 0
 }
 
 // containsColinearEdges determines if the polygon contains collinear edges.
