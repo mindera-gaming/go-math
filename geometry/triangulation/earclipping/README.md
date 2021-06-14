@@ -51,7 +51,7 @@ type TriangulationOptions struct {
 
 // Vector2 represents a 2D vector, point or position
 type Vector2 struct {
-    X float64
+	X float64
 	Y float64
 }
 ```
