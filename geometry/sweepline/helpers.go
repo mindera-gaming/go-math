@@ -3,19 +3,19 @@ package sweepline
 import "container/list"
 
 // insertEvent inserts a new event to the queue
-func insertEvent(list *list.List, event Event) {
-	for e := list.Front(); e != nil; e = e.Next() {
-		value := e.Value.(Event).Value
-		if value == event.Value {
-			list.InsertBefore(event, e)
+func insertEvent(list *list.List, e event) {
+	for element := list.Front(); element != nil; element = element.Next() {
+		value := element.Value.(event).Value
+		if value == e.Value {
+			list.InsertBefore(e, element)
 			return
 		}
-		if value > event.Value {
-			list.InsertBefore(event, e)
+		if value > e.Value {
+			list.InsertBefore(e, element)
 			return
 		}
 	}
-	list.PushBack(event)
+	list.PushBack(e)
 }
 
 // eventPoll returns and removes the head of the queue
