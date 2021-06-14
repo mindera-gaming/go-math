@@ -3,7 +3,7 @@ This package offers a polygon triangulation solution using the Ear Clipping meth
 
 - [Installation](#installation)
 - [Usage](#usage)
-    - [Requirements](#mequirements)
+    - [Requirements](#requirements)
     - [Mentioned structures](#mentioned-structures)
 
 

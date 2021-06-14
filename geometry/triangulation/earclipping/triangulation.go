@@ -2,9 +2,8 @@ package earclipping
 
 import (
 	"container/list"
-	"math"
 
-	"github.com/mindera-gaming/go-math/geometry/sweepline"
+	. "github.com/mindera-gaming/go-math/geometry"
 	vector "github.com/mindera-gaming/go-math/vector2"
 )
 
@@ -39,26 +38,26 @@ func Triangulate(vertices []vector.Vector2, options TriangulationOptions) (trian
 		return
 	}
 	if !options.SkipSimplePolygonValidation {
-		if !isSimplePolygon(vertices) {
+		if !IsSimplePolygon(vertices) {
 			err = ErrNotSimplePolygon
 			return
 		}
 	}
 	if !options.SkipColinearEdgesValidation {
-		if containsColinearEdges(vertices) {
+		if ContainsColinearEdges(vertices) {
 			err = ErrColinearEdges
 			return
 		}
 	}
 
 	if !options.SkipWindingOrderValidation {
-		var order windingOrder
-		area, order = computePolygonArea(vertices)
-		if order == invalid {
+		var order WindingOrder
+		area, order = ComputePolygonArea(vertices)
+		if order == Invalid {
 			err = ErrInvalidWindingOrder
 			return
 		}
-		if order == counterClockwise {
+		if order == CounterClockwise {
 			reverseVertices(&vertices)
 		}
 	}
@@ -101,7 +100,7 @@ func Triangulate(vertices []vector.Vector2, options TriangulationOptions) (trian
 				}
 
 				p := vertices[j]
-				if isPointInTriangle(p, previousVector, currentVector, nextVector) {
+				if IsPointInTriangle(p, previousVector, currentVector, nextVector) {
 					isEar = false
 					break
 				}
@@ -126,93 +125,4 @@ func Triangulate(vertices []vector.Vector2, options TriangulationOptions) (trian
 	triangles[triangleIndexCount+2] = index.Next().Next().Value.(int)
 
 	return
-}
-
-// isSimplePolygon determines whether the polygon is simple or complex.
-func isSimplePolygon(vertices []vector.Vector2) bool {
-	// firstly it will check for overlapping vertices
-	for i := 1; i < len(vertices); i++ {
-		if vertices[i] == vertices[i-1] {
-			// there is an overlap
-			return false
-		}
-	}
-
-	// finding intersections using the sweep-line algorithm
-	segments := make([]sweepline.Segment, len(vertices))
-	for i := 1; i < len(vertices); i++ {
-		segments[i-1] = sweepline.NewSegment(vertices[i-1], vertices[i])
-	}
-	lastIndex := len(vertices) - 1
-	segments[lastIndex] = sweepline.NewSegment(vertices[lastIndex], vertices[0])
-
-	intersections := sweepline.FindIntersections(segments)
-
-	return len(intersections) <= 0
-}
-
-// containsColinearEdges determines if the polygon contains collinear edges.
-func containsColinearEdges(vertices []vector.Vector2) bool {
-	// determining if 3 points are collinear using the distance formula
-	for i := 0; i < len(vertices)-2; i++ {
-		a := vertices[i]
-		b := vertices[i+1]
-		c := vertices[i+2]
-
-		abDist := a.Distance(b)
-		cbDist := c.Distance(b)
-		acDist := a.Distance(c)
-
-		if (abDist + cbDist) == acDist {
-			return true
-		}
-	}
-	return false
-}
-
-// computePolygonArea determines the winding order of a polygon.
-// Returns the area of the polygon and its winding order.
-func computePolygonArea(vertices []vector.Vector2) (float64, windingOrder) {
-	var area float64
-	var windingOrder windingOrder = invalid
-
-	for i := 1; i < len(vertices); i++ {
-		start := vertices[i-1]
-		end := vertices[i]
-		area += (end.X - start.X) * (end.Y + start.Y)
-	}
-	// closing the polygon
-	start := vertices[len(vertices)-1]
-	end := vertices[0]
-	area += (end.X - start.X) * (end.Y + start.Y)
-
-	if area > 0 {
-		windingOrder = clockwise
-	}
-	if area < 0 {
-		windingOrder = counterClockwise
-	}
-
-	return math.Abs(area / 2), windingOrder
-}
-
-// isPointInTriangle verifies if the point p is inside the triangle abc.
-func isPointInTriangle(p, a, b, c vector.Vector2) bool {
-	ab := a.To(b)
-	bc := b.To(c)
-	ca := c.To(a)
-
-	ap := a.To(p)
-	bp := b.To(p)
-	cp := c.To(p)
-
-	cross1 := ab.Cross(ap)
-	cross2 := bc.Cross(bp)
-	cross3 := ca.Cross(cp)
-
-	if cross1 > 0 || cross2 > 0 || cross3 > 0 {
-		return false
-	}
-
-	return true
 }
