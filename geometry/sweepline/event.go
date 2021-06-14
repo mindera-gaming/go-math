@@ -2,16 +2,25 @@ package sweepline
 
 import vector "github.com/mindera-gaming/go-math/vector2"
 
-// Event defines an event point
-type Event struct {
+// eventType defines an enumerator that represents the type of the event
+type eventType byte
+
+const (
+	start eventType = iota
+	end
+	intersection
+)
+
+// event defines an event point
+type event struct {
 	Point    vector.Vector2
 	Segments []Segment
 	Value    float64
-	Type     int
+	Type     eventType
 }
 
 // NewEventSingleSegment returns a new event with a single segment
-func NewEventSingleSegment(p vector.Vector2, s Segment, t int) (e Event) {
+func NewEventSingleSegment(p vector.Vector2, s Segment, t eventType) (e event) {
 	e.Point = p
 	e.Segments = append(e.Segments, s)
 	e.Value = p.X
@@ -20,8 +29,8 @@ func NewEventSingleSegment(p vector.Vector2, s Segment, t int) (e Event) {
 }
 
 // NewEvent returns a new event with a set of segments
-func NewEvent(p vector.Vector2, s []Segment, t int) Event {
-	return Event{
+func NewEvent(p vector.Vector2, s []Segment, t eventType) event {
+	return event{
 		Point:    p,
 		Segments: s,
 		Value:    p.X,
@@ -30,6 +39,6 @@ func NewEvent(p vector.Vector2, s []Segment, t int) Event {
 }
 
 // AddSegment adds a new segment to the event
-func (e *Event) AddSegment(s Segment) {
+func (e *event) AddSegment(s Segment) {
 	e.Segments = append(e.Segments, s)
 }

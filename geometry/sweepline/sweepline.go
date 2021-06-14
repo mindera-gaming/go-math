@@ -24,13 +24,12 @@ func FindIntersections(inputData []Segment) (intersections []vector2.Vector2) {
 
 	// runs the queue until it is empty
 	for eventQueue.Len() != 0 {
-		e := eventPoll(eventQueue).Value.(Event)
+		e := eventPoll(eventQueue).Value.(event)
 		l := e.Value
 
 		// handling an event
 		switch e.Type {
-		// start
-		case 0:
+		case start:
 			for _, s := range e.Segments {
 				recalculate(status, l)
 				insertStatusSegment(status, s)
@@ -48,8 +47,7 @@ func FindIntersections(inputData []Segment) (intersections []vector2.Vector2) {
 					removeFuture(eventQueue, lower.Value.(Segment), higher.Value.(Segment))
 				}
 			}
-		// end
-		case 1:
+		case end:
 			for _, s := range e.Segments {
 				lower := lowerStatusSegment(status, s)
 				higher := higherStatusSegment(status, s)
@@ -59,8 +57,7 @@ func FindIntersections(inputData []Segment) (intersections []vector2.Vector2) {
 				}
 				removeStatusSegment(status, s)
 			}
-		// intersection
-		case 2:
+		case intersection:
 			s1 := e.Segments[0]
 			s2 := e.Segments[1]
 
@@ -140,7 +137,7 @@ func reportIntersection(queue *list.List, s1, s2 Segment, l float64) bool {
 // removeFuture removes future segments from the queue
 func removeFuture(queue *list.List, s1, s2 Segment) bool {
 	for e := queue.Front(); e != nil; e = e.Next() {
-		event := e.Value.(Event)
+		event := e.Value.(event)
 		if event.Type == 2 {
 			if (event.Segments[0] == s1 && event.Segments[1] == s2) || (event.Segments[0] == s2 && event.Segments[1] == s1) {
 				queue.Remove(e)
