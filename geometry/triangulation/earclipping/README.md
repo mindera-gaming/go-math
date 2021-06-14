@@ -8,7 +8,6 @@ This package offers a polygon triangulation solution using the Ear Clipping meth
 
 
 ## Installation
----
 
 Simply run the following command to install this package to your GOPATH:
 ```shell
@@ -17,7 +16,6 @@ go get github.com/mindera-gaming/go-ear-clipping
 
 
 ## Usage
----
 
 The `triangulation` package API exposes one function:
 
