@@ -9,6 +9,10 @@ import (
 
 // IsSimplePolygon determines whether the polygon is simple or complex.
 func IsSimplePolygon(vertices []vector.Vector2) bool {
+	if len(vertices) < 3 {
+		return false
+	}
+
 	// firstly it will check for overlapping vertices
 	for i := 1; i < len(vertices); i++ {
 		if vertices[i] == vertices[i-1] {
@@ -32,6 +36,10 @@ func IsSimplePolygon(vertices []vector.Vector2) bool {
 
 // ContainsColinearEdges determines if the polygon contains collinear edges.
 func ContainsColinearEdges(vertices []vector.Vector2) bool {
+	if len(vertices) < 3 {
+		return false
+	}
+
 	// determining if 3 points are collinear using the distance formula
 	for i := 0; i < len(vertices)-2; i++ {
 		a := vertices[i]
@@ -52,6 +60,10 @@ func ContainsColinearEdges(vertices []vector.Vector2) bool {
 // ComputePolygonArea determines the winding order of a polygon.
 // Returns the area of the polygon and its winding order.
 func ComputePolygonArea(vertices []vector.Vector2) (float64, WindingOrder) {
+	if len(vertices) < 3 {
+		return 0, Invalid
+	}
+
 	var area float64
 	var windingOrder WindingOrder = Invalid
 
