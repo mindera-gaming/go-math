@@ -86,8 +86,9 @@ func Triangulate(vertices []vector.Vector2, options TriangulationOptions) (trian
 			currentToPreviousVector := currentVector.To(previousVector)
 			currentToNextVector := currentVector.To(nextVector)
 
-			// checks if the test vertex is convex
+			// checks if the test vertex is convex (valid)
 			if currentToPreviousVector.Cross(currentToNextVector) <= 0 {
+				// test vertex is reflex (not valid)
 				continue
 			}
 
