@@ -15,8 +15,8 @@ func FindIntersections(inputData []Segment) (intersections []vector2.Vector2) {
 	// initialising the event queue
 	eventQueue := list.New()
 	for _, segment := range inputData {
-		insertEvent(eventQueue, NewEventSingleSegment(segment.First(), segment, 0))
-		insertEvent(eventQueue, NewEventSingleSegment(segment.Second(), segment, 1))
+		insertEvent(eventQueue, NewEventSingleSegment(segment.First(), segment, start))
+		insertEvent(eventQueue, NewEventSingleSegment(segment.Second(), segment, end))
 	}
 
 	// initialising the sweep-line status
@@ -125,7 +125,7 @@ func reportIntersection(queue *list.List, s1, s2 Segment, l float64) bool {
 					NewEvent(
 						vector2.Vector2{X: xC, Y: yC},
 						[]Segment{s1, s2},
-						2,
+						intersection,
 					))
 				return true
 			}
