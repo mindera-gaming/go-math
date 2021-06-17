@@ -23,8 +23,8 @@ type TriangulationOptions struct {
 // Triangulate decomposes a simple polygon into a set of triangles.
 //
 // Receives the set of vertices of a polygon and the triagulation options.
-// Returns the set of indices of the vertices of the calculated triangles and the area of the polygon.
-func Triangulate(vertices []vector.Vector2, options TriangulationOptions) (triangles []int, area float64, err error) {
+// Returns the set of indices of the vertices of the calculated triangles.
+func Triangulate(vertices []vector.Vector2, options TriangulationOptions) (triangles []int, err error) {
 	if vertices == nil {
 		err = ErrNilVertices
 		return
@@ -52,7 +52,7 @@ func Triangulate(vertices []vector.Vector2, options TriangulationOptions) (trian
 
 	if !options.SkipWindingOrderValidation {
 		var order WindingOrder
-		area, order = ComputePolygonArea(vertices)
+		_, order = ComputePolygonArea(vertices)
 		if order == Invalid {
 			err = ErrInvalidWindingOrder
 			return
@@ -95,12 +95,14 @@ func Triangulate(vertices []vector.Vector2, options TriangulationOptions) (trian
 			isEar := true
 
 			// checks if the test ear contains any polygon vertices
-			for j := 0; j < len(vertices); j++ {
-				if j == current || j == previous || j == next {
+			for testEarIndex := indexList.Front(); testEarIndex != nil; testEarIndex = testEarIndex.Next() {
+				earIndexValue := testEarIndex.Value.(int)
+
+				if earIndexValue == current || earIndexValue == previous || earIndexValue == next {
 					continue
 				}
 
-				p := vertices[j]
+				p := vertices[earIndexValue]
 				if IsPointInTriangle(p, previousVector, currentVector, nextVector) {
 					isEar = false
 					break

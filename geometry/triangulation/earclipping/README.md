@@ -21,11 +21,11 @@ The `triangulation` package API exposes one function:
 
 ```go
 // Triangulate decomposes a simple polygon into a set of triangles
-func Triangulate(vertices []vector.Vector2, options TriangulationOptions) (triangles []int, area float64, err error)
+func Triangulate(vertices []vector.Vector2, options TriangulationOptions) (triangles []int, err error)
 ```
 
 `Triangulate` takes the vertices of your polygon `[]Vector2` and some triangulation options `TriangulationOptions`.  
-At the end, it returns the set of indices `[]int` of the vertices of the calculated triangles and the area `float64` of the polygon.
+At the end, it returns the set of indices `[]int` of the vertices of the calculated triangles.
 
 
 ### Requirements
