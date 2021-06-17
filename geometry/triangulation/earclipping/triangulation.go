@@ -50,8 +50,8 @@ func Triangulate(vertices []vector.Vector2, options TriangulationOptions) (trian
 		}
 	}
 
+	var order WindingOrder = Clockwise
 	if !options.SkipWindingOrderValidation {
-		var order WindingOrder
 		_, order = ComputePolygonArea(vertices)
 		if order == Invalid {
 			err = ErrInvalidWindingOrder
@@ -126,6 +126,15 @@ func Triangulate(vertices []vector.Vector2, options TriangulationOptions) (trian
 	triangles[triangleIndexCount] = index.Value.(int)
 	triangles[triangleIndexCount+1] = index.Next().Value.(int)
 	triangles[triangleIndexCount+2] = index.Next().Next().Value.(int)
+
+	// in case the polygon has been sent counter-clockwise winding order
+	if order == CounterClockwise {
+		// reverses the indices of the triangles
+		lenIndex := len(vertices) - 1
+		for i := 0; i < len(triangles); i++ {
+			triangles[i] = lenIndex - triangles[i]
+		}
+	}
 
 	return
 }
