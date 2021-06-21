@@ -3,6 +3,8 @@ package earclipping
 import (
 	"container/list"
 
+	listHelper "github.com/mindera-gaming/go-data-structure/list"
+	"github.com/mindera-gaming/go-data-structure/slice"
 	. "github.com/mindera-gaming/go-math/geometry"
 	vector "github.com/mindera-gaming/go-math/vector2"
 )
@@ -58,7 +60,7 @@ func Triangulate(vertices []vector.Vector2, options TriangulationOptions) (trian
 			return
 		}
 		if order == CounterClockwise {
-			reverseVertices(&vertices)
+			slice.Reverse(&vertices)
 		}
 	}
 
@@ -76,8 +78,8 @@ func Triangulate(vertices []vector.Vector2, options TriangulationOptions) (trian
 	for indexList.Len() > 3 {
 		for testIndex := indexList.Front(); testIndex != nil; testIndex = testIndex.Next() {
 			current := testIndex.Value.(int)
-			previous := getPreviousElement(*indexList, *testIndex).Value.(int)
-			next := getNextElement(*indexList, *testIndex).Value.(int)
+			previous := listHelper.PreviousCircularElement(indexList, testIndex).Value.(int)
+			next := listHelper.NextCircularElement(indexList, testIndex).Value.(int)
 
 			currentVector := vertices[current]
 			previousVector := vertices[previous]
