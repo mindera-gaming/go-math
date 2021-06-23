@@ -216,6 +216,13 @@ func Reflect(direction Vector2, normal Vector2) Vector2 {
 	return direction.Sub(normal.Mul(2 * direction.Dot(normal)))
 }
 
+// ReverseSlice reverses a Vector2 slice
+func ReverseSlice(slice *[]Vector2) {
+	for i, j := 0, len(*slice)-1; i < j; i, j = i+1, j-1 {
+		(*slice)[i], (*slice)[j] = (*slice)[j], (*slice)[i]
+	}
+}
+
 func (v Vector2) MarshalJSON() ([]byte, error) {
 	return []byte(fmt.Sprintf(jsonFormat, v.X, v.Y)), nil
 }
