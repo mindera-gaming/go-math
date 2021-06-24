@@ -4,7 +4,6 @@ import (
 	"container/list"
 
 	listHelper "github.com/mindera-gaming/go-data-structure/list"
-	"github.com/mindera-gaming/go-data-structure/slice"
 	. "github.com/mindera-gaming/go-math/geometry"
 	vector "github.com/mindera-gaming/go-math/vector2"
 )
@@ -60,7 +59,7 @@ func Triangulate(vertices []vector.Vector2, options TriangulationOptions) (trian
 			return
 		}
 		if order == CounterClockwise {
-			slice.Reverse(&vertices)
+			vector.ReverseSlice(&vertices)
 		}
 	}
 
