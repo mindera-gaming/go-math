@@ -1,2 +1,4 @@
 github.com/google/uuid v1.2.0 h1:qJYtXnJRWmpe7m/3XlyhrsLrEURqHRM2kxzoxXqyUDs=
 github.com/google/uuid v1.2.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
+github.com/mindera-gaming/go-data-structure v0.2.0 h1:fwPVuphWaDauEho2eAN8d0M5bDwsr+91RVDWW1WR99o=
+github.com/mindera-gaming/go-data-structure v0.2.0/go.mod h1:S1/cwvSX84bL8YaYkEATKG1gZmPD3qgk+E3u8bdusq4=
