@@ -103,3 +103,13 @@ func Max(a, b float64) float64 {
 	}
 	return b
 }
+
+// QuadraticFormula provides the solution(s) to a quadratic equation.
+// Given a general quadratic equation of the form `ax² + bx + c = 0`
+// with x representing an unknown, a, b and c representing constants.
+// This function returns `x1` (+) and `x2` (-)
+func QuadraticFormula(a, b, c float64) (x1, x2 float64) {
+	x1 = (-b + math.Sqrt((b*b)-(4*a*c))) / (2 * a)
+	x2 = (-b - math.Sqrt((b*b)-(4*a*c))) / (2 * a)
+	return
+}
