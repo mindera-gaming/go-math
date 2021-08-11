@@ -110,7 +110,8 @@ func Max(a, b float64) float64 {
 // This function returns `x1` (+) and `x2` (-)
 func QuadraticFormula(a, b, c float64) (x1, x2 float64) {
 	discriminant := math.Sqrt((b * b) - (4 * a * c))
-	x1 = (-b + discriminant) / (2 * a)
-	x2 = (-b - discriminant) / (2 * a)
+	divisor := 2 * a
+	x1 = (-b + discriminant) / divisor
+	x2 = (-b - discriminant) / divisor
 	return
 }
