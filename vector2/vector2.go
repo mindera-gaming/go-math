@@ -29,6 +29,11 @@ func (v *Vector2) Reset() {
 	v.Y = 0
 }
 
+// Zero returns a vector with a value of 0 in both fields, X and Y. Provides a shorthand for Vector2{X: 0, Y: 0}
+func Zero() Vector2 {
+	return Vector2{X: 0, Y: 0}
+}
+
 // One returns a vector with a value of 1 in both fields, X and Y. Provides a shorthand for Vector2{X: 1, Y: 1}
 func One() Vector2 {
 	return Vector2{X: 1, Y: 1}
