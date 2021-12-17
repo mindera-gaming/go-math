@@ -118,5 +118,6 @@ func QuadraticFormula(a, b, c float64) (x1, x2 float64) {
 
 // Approximately compares two floating point values and returns true if they are similar
 func Approximately(a, b float64) bool {
-	return math.Abs(a-b) <= Epsilon64
+	v := a - b
+	return v >= -Epsilon64 && v <= Epsilon64
 }
